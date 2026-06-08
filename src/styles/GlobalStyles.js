@@ -12,7 +12,7 @@ export default createGlobalStyle`
 
     body {
         background-color: ${primaryDarkColor};
-        color: ${primaryColor}
+        /* color: ${primaryColor} */
     }
 
     html, body, #root {
