@@ -11,7 +11,8 @@ export default function () {
                 <small>Oie</small>
             </Title>
             <Paragrafo>Lorem ipsum dolor sit amet.</Paragrafo>
-            <a href="">Oie</a>
+
+            <button type='button'>Enviar</button>
         </Container>
     );
 }
