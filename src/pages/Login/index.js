@@ -1,9 +1,22 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Title, Paragrafo } from './styled';
 import { Container } from '../../styles/GlobalStyles';
 
 export default function Login() {
+    // Função para disparar ação do Redux
+    const dispatch = useDispatch();
+
+    function handleClick(e) {
+        e.preventDefault();
+
+        // Disparando uma ação
+        dispatch({
+            type: 'BOTAO_CLICADO'
+        });
+    }
+
     return (
         <Container>
             <Title>
@@ -12,7 +25,7 @@ export default function Login() {
             </Title>
             <Paragrafo>Lorem ipsum dolor sit amet.</Paragrafo>
 
-            <button type="button">Enviar</button>
+            <button type="button" onClick={handleClick}>Enviar</button>
         </Container>
     );
 }
