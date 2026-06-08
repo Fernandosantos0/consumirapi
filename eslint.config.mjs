@@ -23,8 +23,8 @@ export default defineConfig([
             'prettier/prettier': 'error',
             'react/jsx-filename-extension': 0,
             'import/prefer-default-export': 0,
-            'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-            'react-hooks/exhaustive-deps': 'warn' // Checks effect dependencie
+            'react-hooks/rules-of-hooks': 'error', // Verifica as regras dos Hooks
+            'react-hooks/exhaustive-deps': 'warn' // Verifica a dependência do efeito
         }
     },
     pluginReact.configs.flat.recommended
