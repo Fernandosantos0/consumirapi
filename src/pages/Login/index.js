@@ -15,7 +15,7 @@ export default function Login() {
         e.preventDefault();
 
         // Disparando uma ação
-        dispatch(exampleActions.clicaBotao());
+        dispatch(exampleActions.clicaBotaoRequest());
     }
 
     return (
