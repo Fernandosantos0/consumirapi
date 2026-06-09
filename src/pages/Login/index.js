@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Title, Paragrafo } from './styled';
 import { Container } from '../../styles/GlobalStyles';
 
+// Importando as actions do Redux
+import * as exampleActions from '../../store/modules/example/actions'
+
 export default function Login() {
     // Função para disparar ação do Redux
     const dispatch = useDispatch();
@@ -12,9 +15,7 @@ export default function Login() {
         e.preventDefault();
 
         // Disparando uma ação
-        dispatch({
-            type: 'BOTAO_CLICADO'
-        });
+        dispatch(exampleActions.clicaBotao());
     }
 
     return (

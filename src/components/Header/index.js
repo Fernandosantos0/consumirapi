@@ -8,7 +8,7 @@ import { FaHome, FaSignInAlt, FaUserAlt } from 'react-icons/fa';
 import { Nav } from './styled';
 
 export default function Header() {
-    const { botaoClicado } = useSelector(state => state);
+    const { botaoClicado } = useSelector(state => state.example);
 
     return (
         <Nav>

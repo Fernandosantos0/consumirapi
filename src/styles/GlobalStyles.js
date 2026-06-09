@@ -13,13 +13,18 @@ export default createGlobalStyle`
         font-family: "Montserrat", Arial, Helvetica, sans-serif;
     }
 
+    html, body, #root {
+        height: 100%;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scrollbar-color: ${colors.primaryColor} ${colors.primaryDarkColor};
+    }
+
     body {
         background-color: ${colors.primaryDarkColor};
         color: ${colors.primaryDarkColor};
-    }
-
-    html, body, #root {
-        height: 100%;
     }
 
     button {
