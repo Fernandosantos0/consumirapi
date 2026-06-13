@@ -1,23 +1,34 @@
 import * as types from '../types';
 
 const inicialState = {
-    isLoggedIn: false,
-    token: '',
-    user: {},
-    isLoading: false
+	isLoggedIn: false,
+	token: '',
+	user: {},
+	isLoading: false
 };
 
 // Função que vai escutar as ações que são disparada e executar uma função a partir de um tipo de função
-export default function(state = inicialState, action) {
+export default function (state = inicialState, action) {
+    switch (action.type) {
+		case types.LOGIN_SUCCESS: {
+            // Copiando o state (estado)
+			const newState = { ...state };
 
-    switch(action.type) {
-        case types.LOGIN_REQUEST: {
-            console.log('REDUCER', action.payload)
-            return state;
-        }
+            // Alterando o state (estado)
+            newState.isLoggedIn = true;
+            newState.token = action.payload.token;
+            newState.user = action.payload.user;
 
-        default:
-            return state;
-    }
+            // Retornando o state (estado)
+			return newState;
+		}
 
-};
+		case types.LOGIN_FAILURE: {
+			const newState = { ...inicialState };
+			return newState;
+		}
+
+		default:
+			return state;
+	}
+}

@@ -9,8 +9,10 @@ import { Form } from './styled';
 
 import * as actions from '../../store/modules/auth/actions';
 
-export default function Login() {
+export default function Login(props) {
 	const dispatch = useDispatch();
+
+    const prevPath = get(props, 'location.state.prevPath', '/');
 
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
@@ -34,7 +36,7 @@ export default function Login() {
 		if (formErrors) return;
 
 		// Realizando a ação para logar
-		dispatch(actions.loginRequest({ email, password })); // Disparar uma ação do Redux
+		dispatch(actions.loginRequest({ email, password, prevPath })); // Disparar uma ação do Redux
 	};
 
 	return (
