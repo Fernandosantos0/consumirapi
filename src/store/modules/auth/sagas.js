@@ -10,7 +10,7 @@ import * as types from '../types';
 */
 
 function* loginRequest({ payload }) {
-	console.log('Saga', payload);
+	console.log('SAGA', payload);
 }
 
 // Exportando o saga

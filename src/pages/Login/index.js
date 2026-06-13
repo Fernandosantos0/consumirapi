@@ -10,13 +10,13 @@ import { Form } from './styled';
 import * as actions from '../../store/modules/auth/actions';
 
 export default function Login() {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 
 	// Função para logar
-	const handleSubmit = function (event) {
+	const handleSubmit = event => {
 		event.preventDefault();
 		let formErrors = false;
 
@@ -28,13 +28,13 @@ export default function Login() {
 
 		if (password.length < 6 || password.length > 16) {
 			formErrors = true;
-			toast.error('A senha precisa ter entre 6 a 16 caracteres');
+			toast.error('Senha inválida');
 		}
 
 		if (formErrors) return;
 
-        // Realizando a ação para logar
-		dispatch(actions.loginRequest({ email, password }));
+		// Realizando a ação para logar
+		dispatch(actions.loginRequest({ email, password })); // Disparar uma ação do Redux
 	};
 
 	return (
