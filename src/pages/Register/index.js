@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { isEmail } from 'validator';
-
-import { get } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Container } from '../../styles/GlobalStyles';
 import { Form } from './styled';
 
-import axios from '../../services/axios';
-import history from '../../services/history';
-
 import Loading from '../../components/Loading';
+import * as actions from '../../store/modules/auth/actions';
 
 export default function Register() {
+    const dispatch = useDispatch();
+
+    // Pegando os dados do Redux
+    const id = useSelector(state => state.auth.user.id);
+    const nomeStored = useSelector(state => state.auth.user.node);
+    const emailStored = useSelector(state => state.auth.user.email);
+    const isLoading = useSelector(state => state.auth.isLoading);
+
 	const [nome, setNome] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-    const [isLoading, SetIsLoading] = useState(false);
+
+    React.useEffect(() => {
+        if(!id) return;
+
+        setNome(nomeStored);
+        setEmail(emailStored);
+    }, [])
 
 	// Função do submit do formulário
 	async function handleSubmit(event) {
@@ -34,38 +45,20 @@ export default function Register() {
 			toast.error('E-mail inválido');
 		}
 
-		if (password.length < 6 || password.length > 16) {
+		if (!id && (password.length < 6 || password.length > 16)) {
 			formErrors = true;
 			toast.error('A senha precisa ter entre 6 a 16 caracteres');
 		}
 
 		if (formErrors) return;
 
-        SetIsLoading(true);
-
-		// Registrado no banco de dados
-		try {
-			await axios.post('/users', {
-				nome,
-				email,
-				password
-			});
-
-            toast.success('Você fez seu cadastro');
-            SetIsLoading(false);
-            history.push('/');
-		} catch (err) {
-            // const status = get(err, 'response.status', 0);
-            const errors = get(err, 'response.data.errors', []);
-
-            errors.forEach(err => toast.error(err));
-            SetIsLoading(false);
-        }
+        // Disparando uma ação do redux
+        dispatch(actions.registerRequest({ nome, email, password, id }));
 	}
 
 	return (
 		<Container>
-			<h1>Crie sua conta</h1>
+			<h1>{id ? 'Editar dados' : 'Crie sua conta'}</h1>
 
             <Loading isLoading={isLoading} />
 
@@ -106,7 +99,9 @@ export default function Register() {
 					/>
 				</div>
 
-				<button type="submit">Criar minha conta</button>
+				<button type="submit">
+                    {id ? 'Salvar' : 'Criar minha conta'}
+                </button>
 			</Form>
 		</Container>
 	);

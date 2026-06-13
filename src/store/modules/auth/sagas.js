@@ -44,8 +44,14 @@ function persistRehydrate(payload) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
+function registerRequest({ payload }) {
+    let { id, nome, email, password } = payload;
+    // password: password || undefined;
+}
+
 // Exportando o saga
 export default all([
     takeLatest(types.LOGIN_REQUEST, loginRequest),
-    takeLatest(types.PERSIST_REHYDRATE, persistRehydrate)
+    takeLatest(types.PERSIST_REHYDRATE, persistRehydrate),
+    takeLatest(types.REGISTER_REQUEST, registerRequest)
 ]);
