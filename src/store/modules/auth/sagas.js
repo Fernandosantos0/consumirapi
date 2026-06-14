@@ -35,13 +35,13 @@ function* loginRequest({ payload }) {
 }
 
 // função para adicionar o token no cabeçalho da requisição
-function persistRehydrate(payload) {
+function* persistRehydrate({ payload }) {
     const token = get(payload, 'auth.token', '');
 
     if(!token) return;
-
+    
     // Definindo o cabeçalho padrão do axios
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 
 function* registerRequest({ payload }) {

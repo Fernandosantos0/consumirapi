@@ -15,10 +15,8 @@ export default function Login(props) {
 	const dispatch = useDispatch();
 
     const prevPath = get(props, 'location.state.prevPath', '/');
-
+    
     const isLoading = useSelector(state => state.auth.isLoading);
-
-    console.log(isLoading);
 
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
