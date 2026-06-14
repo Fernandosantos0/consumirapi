@@ -1,3 +1,4 @@
+import axios from '../../../services/axios';
 import * as types from '../types';
 
 const inicialState = {
@@ -27,6 +28,10 @@ export default function (state = inicialState, action) {
 
 		case types.LOGIN_FAILURE: {
 			const newState = { ...inicialState };
+
+            // Exluindo o Authorization do cabeçalho da requisição
+            delete axios.defaults.headers.common.Authorization;
+
 			return newState;
 		}
 
