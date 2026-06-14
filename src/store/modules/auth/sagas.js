@@ -44,9 +44,54 @@ function persistRehydrate(payload) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
-function registerRequest({ payload }) {
-    let { id, nome, email, password } = payload;
+function* registerRequest({ payload }) {
+    const { id, nome, email, password } = payload;
     // password: password || undefined;
+
+    try {
+
+        // Se existe o ID, será uma requisição put
+        if(id) {
+            yield call(axios.put, '/users', {
+                email,
+                nome,
+                password: password || undefined
+            });
+
+            toast.success('Conta alterada com sucesso!');
+            yield put(actions.registerUpdatedSuccess({ nome, email, password }));
+
+        } else {
+            yield call(axios.post, '/users', {
+                email,
+                nome,
+                password
+            });
+
+            toast.success('Conta criada com sucesso!');
+            yield put(actions.registerCreatedSuccess({ nome, email, password }));
+            history.push('/login'); // Redirecionando
+        }
+
+    } catch(e) {
+        const errors = get(e, 'response.data.errors', []);
+        const status = get(e, 'response.status', 0);
+
+        // Verificando se o usuário esta logado
+        if(status === 401) {
+            toast.info('Você precisa fazer login novamente.');
+            yield put(actions.loginFailure());
+            return history.push('/login');
+        }
+
+        if(errors.length > 0) {
+            errors.map(error => toast.error(error));
+        } else {
+            toast.error('Erro desconhecido');
+        }
+
+        yield put(actions.registerFailure());
+    }
 }
 
 // Exportando o saga

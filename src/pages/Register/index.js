@@ -18,7 +18,11 @@ export default function Register() {
     const emailStored = useSelector(state => state.auth.user.email);
     const isLoading = useSelector(state => state.auth.isLoading);
 
-	const [nome, setNome] = useState('');
+	// const [nome, setNome] = useState(nomeStored || '');
+	// const [email, setEmail] = useState(emailStored || '');
+	// const [password, setPassword] = useState('');
+
+    const [nome, setNome] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -27,7 +31,7 @@ export default function Register() {
 
         setNome(nomeStored);
         setEmail(emailStored);
-    }, [])
+    }, [id, nome, email])
 
 	// Função do submit do formulário
 	async function handleSubmit(event) {
