@@ -31,7 +31,7 @@ export default function Register() {
 
         setNome(nomeStored);
         setEmail(emailStored);
-    }, [id, nome, email])
+    }, [])
 
 	// Função do submit do formulário
 	async function handleSubmit(event) {
