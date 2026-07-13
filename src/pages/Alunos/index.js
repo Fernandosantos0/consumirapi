@@ -10,15 +10,13 @@ import {
 } from 'react-icons/fa';
 
 import { Container } from '../../styles/GlobalStyles';
-import { AlunoContainer, ProfilePicture } from './styled';
+import { AlunoContainer, ProfilePicture, NovoAluno } from './styled';
 
 import Loading from '../../components/Loading';
 
 /* Axios */
 import axios from '../../services/axios';
 import { toast } from 'react-toastify';
-
-import { useDispatch } from 'react-redux';
 
 export default function Alunos() {
 	const [alunos, setAlunos] = useState([]);
@@ -84,6 +82,8 @@ export default function Alunos() {
 			<Loading isLoading={isLoading} />
 
 			<h1>Alunos</h1>
+
+            <NovoAluno to='/aluno'>Novo Aluno</NovoAluno>
 
 			<AlunoContainer>
 				{alunos.map((aluno, indice) => (
