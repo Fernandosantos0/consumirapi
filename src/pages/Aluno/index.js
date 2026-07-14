@@ -4,21 +4,23 @@ import { isEmail, isInt, isFloat } from 'validator';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { FaUserCircle, FaEdit } from 'react-icons/fa';
 
 import { Container } from '../../styles/GlobalStyles';
-import { Form } from './styled';
+import { Form, ProfilePicture, Title } from './styled';
 
 import Loading from '../../components/Loading';
 
 import axios from '../../services/axios';
 import history from '../../services/history';
 import * as actions from '../../store/modules/auth/actions';
+import { Link } from 'react-router-dom';
 
 export default function Aluno({ match }) {
     const dispatch = useDispatch();
 
 	// const id = props.match.params;
-	const id = get(match, 'params.id', 0);
+	const id = get(match, 'params.id', '');
 
 	const [nome, setNome] = React.useState('');
 	const [sobrenome, setSobrenome] = React.useState('');
@@ -26,6 +28,7 @@ export default function Aluno({ match }) {
 	const [idade, setIdade] = React.useState('');
 	const [peso, setPeso] = React.useState('');
 	const [altura, setAltura] = React.useState('');
+	const [foto, setFoto] = React.useState('');
 	const [isLoading, setIsLoading] = React.useState(false);
 
 	// Buscando aluno na API
@@ -37,6 +40,7 @@ export default function Aluno({ match }) {
 				setIsLoading(true);
 				const { data } = await axios.get(`/alunos/${id}`);
 				const Foto = get(data, 'Fotos[0].url', '');
+                setFoto(Foto);
 
 				setNome(data.nome);
 				setSobrenome(data.sobrenome);
@@ -156,7 +160,23 @@ export default function Aluno({ match }) {
 		<Container>
 			<Loading isLoading={isLoading} />
 
-			<h1>{id ? 'Editar Aluno' : 'Novo Aluno'}</h1>
+			<Title>{id ? 'Editar Aluno' : 'Novo Aluno'}</Title>
+
+            {/* Foto do Aluno */}
+            { id && (
+                <ProfilePicture>
+                    { foto ? (
+                        <img src={foto} alt={nome} />
+                    ) : (
+                        <FaUserCircle size={180} />
+                    ) }
+
+                    <Link to={`/fotos/${id}`}>
+                        <FaEdit  size={24} />
+                    </Link>
+                </ProfilePicture>
+            ) }
+            {/* ------------------------------------------------ */}
 
 			{/* Formulário de cadastro ou edição */}
 			<Form onSubmit={handleSubmit}>
